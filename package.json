@@ -1,0 +1,10 @@
+{
+  "name": "ilab-homepage-replica",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A static homepage recreation inspired by ilabsolutions.it.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}

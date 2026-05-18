@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ILAB - Digital Creative Studio</title>
+    <meta
+      name="description"
+      content="一个复刻 ilabsolutions.it 首屏气质的静态首页，包含粒子球、分段文字和滚动动效。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell" id="top">
+      <header class="hero">
+        <a class="brand-mark" href="#top" aria-label="ILAB home">
+          <svg viewBox="0 0 180 180" role="img" aria-hidden="true">
+            <defs>
+              <path id="ring-path" d="M90,18 a72,72 0 1,1 -0.1,0" />
+            </defs>
+            <circle cx="90" cy="90" r="80" />
+            <text class="ring-text">
+              <textPath href="#ring-path" startOffset="50%" text-anchor="middle">
+                WE DESIGN • WE DEVELOP • WE PROMOTE • WE CREATE •
+              </textPath>
+            </text>
+            <text x="90" y="100" text-anchor="middle" class="brand-core">ILAB</text>
+          </svg>
+        </a>
+
+        <a class="contact-badge" href="#contact" aria-label="Jump to contact">
+          <svg viewBox="0 0 170 170" role="img" aria-hidden="true">
+            <defs>
+              <path id="contact-ring" d="M85,18 a67,67 0 1,1 -0.1,0" />
+            </defs>
+            <circle cx="85" cy="85" r="76" />
+            <text class="ring-text small">
+              <textPath href="#contact-ring" startOffset="50%" text-anchor="middle">
+                CONTACT US • CONTACT US •
+              </textPath>
+            </text>
+            <path
+              class="pen-icon"
+              d="M63 103l10-3 37-37c1.5-1.5 1.5-4 0-5.5l-8-8c-1.5-1.5-4-1.5-5.5 0L60 86l-3 10 6 7zM58 111l10-2-8-8-2 10z"
+            />
+          </svg>
+        </a>
+
+        <div class="hero-copy">
+          <p class="eyebrow reveal" data-split="letters">Digital Creative Studio</p>
+          <h1 class="hero-title">
+            <span class="line reveal">digital creative</span>
+            <span class="line reveal delay-1">studio</span>
+          </h1>
+          <div class="hero-text">
+            <p class="reveal delay-2">
+              Dal 2009, ILAB è un digital creative studio di origini partenopee specializzato in
+              branding, web design e advertising.
+            </p>
+            <p class="reveal delay-3">
+              Un laboratorio che si dedica ai propri clienti con stile italiano, attenzione ai
+              particolari e cura sartoriale.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <canvas id="particle-canvas"></canvas>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="section" id="clients">
+          <div class="section-head">
+            <p class="section-kicker reveal" data-split="letters">Clienti</p>
+            <h2 class="section-title reveal">Una selezione di marchi che hanno scelto un linguaggio essenziale e preciso.</h2>
+          </div>
+          <ul class="logo-grid stagger">
+            <li class="logo-card reveal">Mc Donald</li>
+            <li class="logo-card reveal">Camomilla</li>
+            <li class="logo-card reveal">Lacoste</li>
+            <li class="logo-card reveal">Artigli</li>
+            <li class="logo-card reveal">Termoplast</li>
+            <li class="logo-card reveal">Revise Concept</li>
+            <li class="logo-card reveal">Kostumn</li>
+            <li class="logo-card reveal">Minimal</li>
+            <li class="logo-card reveal">Gallistrings</li>
+            <li class="logo-card reveal">Sabox</li>
+            <li class="logo-card reveal">Formaperta</li>
+            <li class="logo-card reveal">Atelier Asap</li>
+          </ul>
+        </section>
+
+        <section class="section awards" id="awards">
+          <div class="section-head compact">
+            <p class="section-kicker reveal" data-split="letters">Premi e riconoscimenti</p>
+            <h2 class="section-title reveal">Ogni lavoro rappresenta una sfida a cui non sappiamo rinunciare.</h2>
+          </div>
+          <div class="award-row stagger">
+            <article class="award-chip reveal">
+              <span class="award-mark">A</span>
+              <span class="award-copy">Award Selection</span>
+            </article>
+            <article class="award-chip reveal">
+              <span class="award-mark">A</span>
+              <span class="award-copy">Award Selection</span>
+            </article>
+            <article class="award-chip reveal">
+              <span class="award-mark">A</span>
+              <span class="award-copy">Award Selection</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="section services" id="services">
+          <div class="section-head">
+            <p class="section-kicker reveal" data-split="letters">Servizi</p>
+            <h2 class="section-title reveal">Un atelier digitale che lavora su identità, interfacce e presenza online.</h2>
+          </div>
+          <div class="service-grid stagger">
+            <article class="service-card reveal">
+              <h3>Branding</h3>
+              <ul>
+                <li>Analisi e Strategia</li>
+                <li>Direzione Creativa</li>
+                <li>Direzione Artistica</li>
+                <li>Visual Identity</li>
+                <li>Tone of Voice</li>
+                <li>Naming</li>
+                <li>Copywriting</li>
+                <li>Storytelling</li>
+                <li>Produzione Foto e Video</li>
+                <li>Illustrazioni</li>
+              </ul>
+            </article>
+            <article class="service-card reveal">
+              <h3>Web Design</h3>
+              <ul>
+                <li>Landing Page</li>
+                <li>Siti Web</li>
+                <li>eCommerce</li>
+                <li>Web App</li>
+                <li>UI / UX</li>
+                <li>Joomla + VirtueMart</li>
+                <li>Magento</li>
+                <li>API Integration</li>
+                <li>Direzione Tecnica</li>
+              </ul>
+            </article>
+            <article class="service-card reveal">
+              <h3>Advertising</h3>
+              <ul>
+                <li>Campagne Pubblicitarie</li>
+                <li>SEO</li>
+                <li>SEM</li>
+                <li>Google Ads</li>
+                <li>Social Media Ads</li>
+              </ul>
+            </article>
+            <article class="service-card reveal">
+              <h3>Social Media</h3>
+              <ul>
+                <li>Strategia</li>
+                <li>Social Media Management</li>
+                <li>Community Management</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer section" id="contact">
+        <div class="section-head compact">
+          <p class="section-kicker reveal" data-split="letters">Start a project</p>
+          <h2 class="section-title reveal">ILAB di Giuseppe Manzavino</h2>
+        </div>
+        <div class="footer-grid">
+          <p class="footer-line reveal">Via G. Mazzini, 6</p>
+          <p class="footer-line reveal">84016 - Pagani, Salerno</p>
+          <a class="footer-link reveal" href="mailto:info@ilabsolutions.it">info@ilabsolutions.it</a>
+          <a class="footer-link reveal" href="tel:+390813443748">+39 081 3443 748</a>
+          <div class="socials reveal">
+            <a href="https://www.facebook.com/ilabdigitalcreativestudio" target="_blank" rel="noreferrer">Facebook</a>
+            <a href="https://www.instagram.com/ilabsolutions" target="_blank" rel="noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/company/ilabsolutions" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
