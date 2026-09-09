@@ -5,6 +5,7 @@ const vertexShader = /* glsl */ `
   uniform float uTime;
   uniform float uShape;
   uniform float uPointSize;
+  uniform vec3 uBlobTransform;
   attribute vec2 aSeed;
   varying float vAlpha;
 
@@ -22,9 +23,13 @@ const vertexShader = /* glsl */ `
       return organic;
     }
     if (shape < 1.5) {
-      vec3 cloud = p * vec3(1.45, 1.75, 0.7);
-      cloud.x += sin(p.y * 5.0 + aSeed.x * 8.0) * 0.42;
-      cloud.y += cos(p.x * 4.0 + aSeed.y * 7.0) * 0.25;
+      vec3 cloud = vec3(
+        (aSeed.x - 0.5) * 4.6 + p.x * 0.22,
+        (aSeed.y - 0.5) * 3.35 + p.y * 0.18,
+        p.z * 0.22
+      );
+      cloud.x += sin(p.y * 5.0 + aSeed.x * 8.0 + uTime * 0.12) * 0.18;
+      cloud.y += cos(p.x * 4.0 + aSeed.y * 7.0 - uTime * 0.1) * 0.16;
       return cloud;
     }
     if (shape < 2.5) {
@@ -32,24 +37,32 @@ const vertexShader = /* glsl */ `
       burst.x += sin(p.y * 9.0 + uTime * 0.3) * 0.22;
       return burst;
     }
-    vec3 folded = p;
-    float angle = p.y * 0.85 + sin(uTime * 0.2) * 0.15;
-    folded.xz = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * folded.xz;
-    return folded * (1.0 + noise * 0.12);
+    if (shape < 3.5) {
+      vec3 folded = p;
+      float angle = p.y * 0.85 + sin(uTime * 0.2) * 0.15;
+      folded.xz = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * folded.xz;
+      folded.y *= 0.76 + 0.12 * sin(p.x * 4.0 + uTime);
+      return folded * (1.0 + noise * 0.12);
+    }
+    vec3 ribbon = p;
+    ribbon.x *= 1.18 + 0.12 * sin(p.y * 3.0 + uTime * 0.4);
+    ribbon.y *= 0.72;
+    ribbon.z += sin(p.x * 4.5 + uTime * 0.35) * 0.2;
+    return ribbon * (1.0 + noise * 0.08);
   }
 
   void main() {
     float fromShape = floor(uShape);
-    float toShape = min(3.0, fromShape + 1.0);
+    float toShape = min(4.0, fromShape + 1.0);
     float blend = smoothstep(0.0, 1.0, fract(uShape));
     vec3 p = mix(shapeAt(fromShape, position), shapeAt(toShape, position), blend);
-
+    p *= uBlobTransform;
 
     vec4 modelPosition = modelMatrix * vec4(p, 1.0);
     vec4 viewPosition = viewMatrix * modelPosition;
     gl_Position = projectionMatrix * viewPosition;
     gl_PointSize = uPointSize * (6.0 / max(1.0, -viewPosition.z));
-    vAlpha = 0.38 + (position.z + 1.0) * 0.25;
+    vAlpha = 0.48 + (position.z + 1.0) * 0.24;
   }
 `;
 
@@ -94,6 +107,7 @@ export class BlobScene {
       uTime: { value: 0 },
       uShape: { value: 0 },
       uPointSize: { value: window.innerWidth < 520 ? 1.45 : 1.65 },
+      uBlobTransform: { value: new THREE.Vector3(1, 1, 1) },
       uColor: { value: new THREE.Color("#ffffff") },
     };
 
@@ -159,12 +173,21 @@ export class BlobScene {
   }
 
   setMode(mode, dark) {
-    const sizes = window.innerWidth < 520 ? [1.45, 1.05, 1.25, 1.35] : [1.65, 1.1, 1.4, 1.55];
-    const color = dark ? 1 : 0.72;
+    const sizes = window.innerWidth < 520 ? [1.45, 1.0, 1.05, 1.25, 1.1] : [1.65, 1.2, 1.2, 1.45, 1.25];
+    const transforms = [
+      [1.0, 1.0, 1.0],
+      [1.0, 1.0, 1.0],
+      [0.86, 1.24, 0.68],
+      [0.7, 0.9, 1.24],
+      [0.78, 1.3, 0.78],
+    ];
+    const color = dark ? 1 : 0.48;
+    const transform = transforms[mode] || transforms[0];
 
     if (this.reducedMotion) {
       this.uniforms.uShape.value = mode;
       this.uniforms.uPointSize.value = sizes[mode];
+      this.uniforms.uBlobTransform.value.set(...transform);
       this.uniforms.uColor.value.setRGB(color, color, color);
       this.renderer.render(this.scene, this.camera);
       return;
@@ -180,6 +203,14 @@ export class BlobScene {
       value: sizes[mode],
       duration: 0.8,
       ease: "power2.out",
+      overwrite: true,
+    });
+    gsap.to(this.uniforms.uBlobTransform.value, {
+      x: transform[0],
+      y: transform[1],
+      z: transform[2],
+      duration: 1.1,
+      ease: "power3.out",
       overwrite: true,
     });
     gsap.to(this.uniforms.uColor.value, {

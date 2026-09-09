@@ -96,14 +96,14 @@ document.querySelector("#app").innerHTML = `
       </div>
     </section>
 
-    <section class="chapter services" data-theme="light" data-shape="1" aria-labelledby="services-title">
+    <section class="chapter services" data-theme="light" data-shape="3" aria-labelledby="services-title">
       <div class="content-shell service-layout">
         <h2 class="section-label split-label" id="services-title" aria-label="Servizi">${letters("Servizi")}</h2>
         <div class="service-grid">${serviceMarkup}</div>
       </div>
     </section>
 
-    <footer class="chapter footer" data-theme="dark" data-shape="3" aria-labelledby="contact-title">
+    <footer class="chapter footer" data-theme="dark" data-shape="4" aria-labelledby="contact-title">
       <div class="content-shell footer-inner">
         <button class="footer-cta" id="contact-title" type="button" data-open-contact>
           <span aria-hidden="true"><span class="cta-word">${letters("start")}</span> <span class="cta-word">${letters("a")}</span> <span class="cta-word">${letters("project")}</span></span>
@@ -252,22 +252,34 @@ let pointerX = -100;
 let pointerY = -100;
 let ringX = -100;
 let ringY = -100;
+let cursorInitialized = false;
+let previousFrameTime = performance.now();
 
 window.addEventListener("pointermove", (event) => {
   pointerX = event.clientX;
   pointerY = event.clientY;
+  if (!cursorInitialized) {
+    ringX = pointerX;
+    ringY = pointerY;
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    cursorInitialized = true;
+  }
   cursor.classList.add("is-active");
   cursorDot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`;
 });
 
-function animateCursor() {
-  ringX += (pointerX - ringX) * 0.16;
-  ringY += (pointerY - ringY) * 0.16;
+function animateCursor(time) {
+  const deltaSeconds = Math.min((time - previousFrameTime) / 1000, 0.05);
+  const follow = 1 - Math.exp(-32 * deltaSeconds);
+  previousFrameTime = time;
+
+  ringX += (pointerX - ringX) * follow;
+  ringY += (pointerY - ringY) * follow;
   cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
   requestAnimationFrame(animateCursor);
 }
 
-if (!reducedMotion) animateCursor();
+if (!reducedMotion) requestAnimationFrame(animateCursor);
 
 document.querySelectorAll("a, button, input, select").forEach((element) => {
   element.addEventListener("pointerenter", () => cursor.classList.add("is-hovering"));
