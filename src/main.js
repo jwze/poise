@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BlobScene } from "./blob-scene.js";
-import { awards, clients, services } from "./data.js";
+import { awards } from "./data.js";
 import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,39 +18,17 @@ const letters = (text) =>
 const words = (text) =>
   text
     .split(" ")
+    .filter(Boolean)
     .map((word) => `<span class="word">${word}</span>`)
-    .join(" ");
-
-const clientMarkup = clients
-  .map(
-    ([id, name]) => `
-      <li class="client-item reveal-item">
-        <img src="/assets/clients/client-${id}.png" alt="${name}" loading="lazy" />
-      </li>`,
-  )
-  .join("");
+    .join("");
 
 const awardMarkup = awards
   .map(
-    ({ name, image, count }) => `
+    ({ name, count, href }) => `
       <li class="award-item reveal-item" data-count="${count}">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="/assets/awards/${image}-light.png" />
-          <img class="award-logo award-logo-light" src="/assets/awards/${image}-light.png" alt="${name}" />
-          <img class="award-logo award-logo-dark" src="/assets/awards/${image}-dark.png" alt="" aria-hidden="true" />
-        </picture>
-        <span class="award-count" aria-label="${count} premi">0</span>
+        <a class="award-link" href="${href}" ${href.startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}>${name}</a>
+        <span class="award-count" aria-label="${count}">0</span>
       </li>`,
-  )
-  .join("");
-
-const serviceMarkup = services
-  .map(
-    ({ title, items }) => `
-      <article class="service reveal-item">
-        <h3>${title}</h3>
-        <ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>
-      </article>`,
   )
   .join("");
 
@@ -58,78 +36,83 @@ document.querySelector("#app").innerHTML = `
   <canvas class="blob-canvas" id="blob-canvas" aria-hidden="true"></canvas>
 
   <header class="site-header">
-    <a class="logo" href="#start" aria-label="ILAB, torna all'inizio">
-      <img class="logo-light" src="/assets/logo-light.png" alt="ILAB" />
-      <img class="logo-dark" src="/assets/logo-dark.png" alt="" aria-hidden="true" />
+    <a class="logo" href="#start" aria-label="回到顶部">
+      <span class="logo-mark" aria-hidden="true">JVZ</span>
     </a>
   </header>
 
   <main id="start">
     <section class="chapter hero" data-theme="dark" data-shape="0" aria-labelledby="hero-title">
       <div class="content-shell hero-inner">
-        <h1 id="hero-title" aria-label="digital creative studio">
-          <span class="title-line">${letters("digital creative")}</span>
-          <span class="title-line">${letters("studio")}</span>
+        <h1 id="hero-title" aria-label="Two benches">
+          <span class="title-line">${letters("two")}</span>
+          <span class="title-line">${letters("benches")}</span>
         </h1>
       </div>
+      <p class="hero-note"><span>抖音工作台 · 小红书工作台。</span><br class="note-break" /><span>看得见的，才留得下。</span></p>
     </section>
 
-    <section class="chapter manifesto" data-theme="light" data-shape="1" aria-label="Chi siamo">
+    <section class="chapter manifesto" id="form" data-theme="light" data-shape="1" aria-label="Visual statement">
       <div class="content-shell manifesto-copy">
-        <p class="word-reveal">${words("Dal 2009, ILAB è un digital creative studio di origini partenopee specializzato in branding, web design e advertising.")}</p>
-        <p class="word-reveal">${words("Un laboratorio che si dedica ai propri clienti con stile italiano, attenzione ai particolari e cura sartoriale.")}</p>
+        <p class="word-reveal">${words("先看清， 再选择。")}</p>
+        <p class="word-reveal">${words("一切， 都在 你 眼前。")}</p>
       </div>
     </section>
 
-    <section class="chapter clients" data-theme="light" data-shape="1" aria-labelledby="clients-title">
+    <section class="chapter clients" id="type" data-theme="light" data-shape="1" aria-labelledby="clients-title">
       <div class="content-shell">
-        <h2 class="section-label split-label" id="clients-title" aria-label="Clienti">${letters("Clienti")}</h2>
-        <ul class="client-grid">${clientMarkup}</ul>
+        <h2 class="section-label split-label" id="clients-title" aria-label="Index">${letters("INDEX")}</h2>
+        <p class="statement word-reveal">${words("从主页 到作者， 都在 手边。")}</p>
       </div>
     </section>
 
-    <section class="chapter recognitions" data-theme="dark" data-shape="2" aria-labelledby="awards-title">
+    <section class="chapter recognitions" id="space" data-theme="dark" data-shape="2" aria-labelledby="awards-title">
       <div class="content-shell recognitions-inner">
-        <h2 class="section-label split-label" id="awards-title" aria-label="Premi e riconoscimenti">${letters("Premi e riconoscimenti")}</h2>
-        <p class="award-message word-reveal">${words("Ogni lavoro rappresenta una sfida a cui non sappiamo rinunciare.")}</p>
+        <h2 class="section-label split-label" id="awards-title" aria-label="Scale">${letters("SCALE")}</h2>
+        <p class="award-message word-reveal">${words("少一点 步骤， 多一点 确定。")}</p>
         <ul class="award-grid">${awardMarkup}</ul>
       </div>
     </section>
 
-    <section class="chapter services" data-theme="light" data-shape="3" aria-labelledby="services-title">
-      <div class="content-shell service-layout">
-        <h2 class="section-label split-label" id="services-title" aria-label="Servizi">${letters("Servizi")}</h2>
-        <div class="service-grid">${serviceMarkup}</div>
+    <section class="chapter services" id="rhythm" data-theme="light" data-shape="3" aria-labelledby="services-title">
+      <div class="content-shell">
+        <h2 class="section-label split-label" id="services-title" aria-label="System">${letters("SYSTEM")}</h2>
+        <p class="statement word-reveal">${words("从识别 到保存， 都不出 本机。")}</p>
       </div>
     </section>
 
-    <footer class="chapter footer" data-theme="dark" data-shape="4" aria-labelledby="contact-title">
+    <footer class="chapter footer" id="frame" data-theme="dark" data-shape="4" aria-labelledby="contact-title">
       <div class="content-shell footer-inner">
         <button class="footer-cta" id="contact-title" type="button" data-open-contact>
-          <span aria-hidden="true"><span class="cta-word">${letters("start")}</span> <span class="cta-word">${letters("a")}</span> <span class="cta-word">${letters("project")}</span></span>
-          <span class="sr-only">Start a project</span>
+          <span aria-hidden="true"><span class="cta-word">${letters("compare")}</span></span>
+          <span class="sr-only">打开两个工作台的对比</span>
         </button>
         <div class="footer-details">
-          <address class="reveal-item">
-            ILAB di Giuseppe Manzavino<br />
-            Via G. Mazzini, 6<br />
-            84016 - Pagani, Salerno
-          </address>
-          <ul class="reveal-item">
-            <li><a href="mailto:info@ilabsolutions.it">info@ilabsolutions.it</a></li>
-            <li><a href="tel:+390813443748">+ (39) 081 3443 748</a></li>
-          </ul>
-          <ul class="social-links reveal-item">
-            <li><a href="https://www.facebook.com/ilabdigitalcreativestudio" data-social="facebook" target="_blank" rel="noreferrer">Facebook</a></li>
-            <li><a href="https://www.instagram.com/ilabsolutions" data-social="instagram" target="_blank" rel="noreferrer">Instagram</a></li>
-            <li><a href="https://www.linkedin.com/company/ilabsolutions" data-social="linkedin" target="_blank" rel="noreferrer">LinkedIn</a></li>
-          </ul>
+          <section class="footer-col reveal-item" aria-label="工作台">
+            <p class="footer-label">Workbench</p>
+            <ul class="footer-list">
+              <li><a href="#type">抖音工作台</a></li>
+              <li><a href="#space">小红书工作台</a></li>
+            </ul>
+          </section>
+          <section class="footer-col reveal-item" aria-label="流程">
+            <p class="footer-label">Flow</p>
+            <ul class="footer-list footer-flow">
+              <li><span>01</span><a href="#rhythm" data-social="signal-a">看清</a></li>
+              <li><span>02</span><a href="#space" data-social="signal-b">选择</a></li>
+              <li><span>03</span><a href="#frame" data-social="signal-c">留下</a></li>
+            </ul>
+          </section>
         </div>
+        <p class="footer-meta reveal-item">
+          <span>Local · Desktop · Two Benches</span>
+          <span>JVZ © 2026</span>
+        </p>
       </div>
     </footer>
   </main>
 
-  <button class="contact-orbit" type="button" data-open-contact aria-label="Contattaci per un preventivo">
+  <button class="contact-orbit" type="button" data-open-contact aria-label="打开两个工作台的对比">
     <span class="contact-orbit-fill"></span>
     <img class="contact-ring contact-ring-light" src="/assets/text_white.png" alt="" />
     <img class="contact-ring contact-ring-dark" src="/assets/text_black.png" alt="" />
@@ -137,33 +120,21 @@ document.querySelector("#app").innerHTML = `
     <img class="contact-pencil contact-pencil-dark" src="/assets/pencil_black.png" alt="" />
   </button>
 
-  <div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true" aria-labelledby="form-title" aria-hidden="true">
-    <button class="contact-close" type="button" aria-label="Chiudi il modulo">×</button>
-    <form class="contact-form" id="contact-form">
-      <h2 class="sr-only" id="form-title">Contatta ILAB</h2>
-      <p>
-        Salve <strong>ILAB,</strong><br />
-        mi chiamo <input name="name" aria-label="Nome e cognome" placeholder="Nome e Cognome" required /> e mi occupo di
-        <input name="occupation" aria-label="La tua attività" placeholder="parlaci della tua attività" />.<br />
-        Sono alla ricerca di un'agenzia a cui affidare un progetto di
-        <select name="project" aria-label="Tipo di progetto">
-          <option>Branding</option><option>Web Design</option><option>Advertising</option><option>Social Media</option><option>Branding + Web</option>
-        </select>.<br />
-        Dispongo di un budget di
-        <select name="budget" aria-label="Budget">
-          <option>circa 5.000 €</option><option>5.000 - 10.000 €</option><option>10.000 - 20.000 €</option><option>+ 20.000 €</option>
-        </select>
-        e il progetto va avviato in circa
-        <select name="timeline" aria-label="Tempi"><option>un mese</option><option>due mesi</option><option>tre mesi</option><option>sei mesi</option></select>.<br />
-        Potrebbe esservi utile sapere che <input name="details" aria-label="Dettagli del progetto" placeholder="si tratta di..." />.<br />
-        Preferirei essere contattato all'indirizzo
-        <input name="email" type="email" aria-label="Email" placeholder="email" required /> o al numero
-        <input name="phone" type="tel" aria-label="Telefono" placeholder="345 *******" />.
-      </p>
-      <label class="privacy"><input type="checkbox" required /> Accetto la Privacy Policy.</label>
-      <button class="contact-submit" type="submit">Invia</button>
-      <p class="form-status" aria-live="polite"></p>
-    </form>
+  <div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" aria-hidden="true">
+    <button class="contact-close" type="button" aria-label="关闭对比面板">×</button>
+    <div class="contact-sheet">
+      <h2 class="sheet-lede" id="panel-title">两个工作台，同一个<em>分寸</em>。</h2>
+      <div class="bench-grid">
+        <article class="bench-card">
+          <h3>抖音工作台</h3>
+          <p class="bench-desc">十一个页面，一个窗口。</p>
+        </article>
+        <article class="bench-card">
+          <h3>小红书工作台</h3>
+          <p class="bench-desc">一个页面，从头到尾。</p>
+        </article>
+      </div>
+    </div>
   </div>
 
   <div class="cursor" aria-hidden="true"><span class="cursor-ring"></span><span class="cursor-dot"></span></div>
@@ -196,7 +167,6 @@ const revealGroups = [
   [".word-reveal .word", 0.025, 0.7, "yPercent", 60],
   [".split-label .letter", 0.035, 0.55, "yPercent", 100],
   [".reveal-item", 0.08, 0.7, "y", 24],
-  [".service li", 0.02, 0.5, "x", -18],
 ];
 
 revealGroups.forEach(([selector, stagger, duration, property, distance]) => {
@@ -298,7 +268,6 @@ orbit.addEventListener("pointerleave", () => { orbit.style.transform = ""; });
 
 const panel = document.querySelector("#contact-panel");
 const closeButton = panel.querySelector(".contact-close");
-const firstInput = panel.querySelector("input");
 let previouslyFocused;
 
 function openContact() {
@@ -306,7 +275,7 @@ function openContact() {
   panel.setAttribute("aria-hidden", "false");
   panel.classList.add("is-open");
   body.classList.add("contact-open");
-  window.setTimeout(() => firstInput.focus(), reducedMotion ? 0 : 450);
+  window.setTimeout(() => closeButton.focus(), reducedMotion ? 0 : 450);
 }
 
 function closeContact() {
@@ -327,17 +296,6 @@ panel.addEventListener("keydown", (event) => {
   const last = focusable.at(-1);
   if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
   if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-});
-
-document.querySelector("#contact-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const subject = encodeURIComponent(`Nuovo progetto ${data.get("project")}`);
-  const message = encodeURIComponent(
-    `Nome: ${data.get("name")}\nAttività: ${data.get("occupation")}\nProgetto: ${data.get("project")}\nBudget: ${data.get("budget")}\nTempi: ${data.get("timeline")}\nDettagli: ${data.get("details")}\nEmail: ${data.get("email")}\nTelefono: ${data.get("phone")}`,
-  );
-  panel.querySelector(".form-status").textContent = "Apertura del tuo client email…";
-  window.location.href = `mailto:info@ilabsolutions.it?subject=${subject}&body=${message}`;
 });
 
 document.querySelectorAll("[data-social]").forEach((link) => {
