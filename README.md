@@ -1,29 +1,30 @@
-# ILAB Studio Experience
+# Two Benches
 
-A modern, high-fidelity recreation of the ILAB Digital Creative Studio homepage. The page keeps the original editorial structure and public brand imagery while replacing the legacy jQuery/canvas implementation with Vite, Three.js, and GSAP.
+抖音工作台与小红书工作台的宣传站点。单页视觉叙事，由 Vite + Three.js + GSAP 构建。
 
-## Development
+## 本地开发
 
 ```bash
 npm install
 npm run dev
 ```
 
-The development server runs at `http://127.0.0.1:5173` by default.
+默认运行在 `http://127.0.0.1:5173`。
 
-## Production
+## 构建预览
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Structure
+## 目录结构
 
-- `src/main.js`: page composition, section transitions, cursor, contact dialog, and interactions
-- `src/blob-scene.js`: responsive Three.js point-cloud scene and shader morphing
-- `src/data.js`: clients, awards, and services content
-- `src/styles.css`: responsive layout, themes, and component states
-- `public/assets`: locally served font and public visual assets used by the recreation
+- `index.html`：页面入口与元信息
+- `src/main.js`：页面结构、章节切换、自定义光标与交互
+- `src/blob-scene.js`：Three.js 点云场景与形变
+- `src/data.js`：页面数据
+- `src/styles.css`：样式、主题与响应式布局
+- `public/assets`：字体与本地视觉素材
 
-The animation pauses when the page is hidden and renders a static scene when the operating system requests reduced motion.
+页面在标签页隐藏时暂停动画，并在系统开启「减少动态效果」时渲染静态场景。

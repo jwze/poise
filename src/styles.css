@@ -326,37 +326,6 @@ main {
 }
 
 
-.award-item picture {
-  position: relative;
-  width: 62%;
-  height: 62%;
-}
-
-.award-logo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: opacity 350ms ease;
-}
-
-.award-logo-light {
-  opacity: 0;
-}
-
-.award-logo-dark {
-  opacity: 1;
-}
-
-body[data-theme="dark"] .award-logo-light {
-  opacity: 1;
-}
-
-body[data-theme="dark"] .award-logo-dark {
-  opacity: 0;
-}
-
 .award-count {
   position: absolute;
   z-index: -1;

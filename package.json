@@ -1,9 +1,9 @@
 {
-  "name": "ilab-studio-experience",
+  "name": "two-benches",
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "A modern, high-fidelity recreation of the ILAB digital studio homepage.",
+  "description": "Two Benches — 抖音工作台与小红书工作台的宣传站点",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
