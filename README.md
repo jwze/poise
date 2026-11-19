@@ -1,6 +1,6 @@
-# Two Benches
+# Poise
 
-抖音工作台与小红书工作台的宣传站点。单页视觉叙事，由 Vite + Three.js + GSAP 构建。
+Two Benches（抖音工作台与小红书工作台）的宣传站点。单页视觉叙事，由 Vite + Three.js + GSAP 构建。
 
 ## 本地开发
 

@@ -1,9 +1,9 @@
 {
-  "name": "two-benches",
+  "name": "poise",
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Two Benches — 抖音工作台与小红书工作台的宣传站点",
+  "description": "Poise — 抖音工作台与小红书工作台的宣传站点",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
