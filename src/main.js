@@ -44,9 +44,8 @@ document.querySelector("#app").innerHTML = `
   <main id="start">
     <section class="chapter hero" data-theme="dark" data-shape="0" aria-labelledby="hero-title">
       <div class="content-shell hero-inner">
-        <h1 id="hero-title" aria-label="Two benches">
-          <span class="title-line">${letters("two")}</span>
-          <span class="title-line">${letters("benches")}</span>
+        <h1 id="hero-title" aria-label="Poise">
+          <span class="title-line">${letters("poise")}</span>
         </h1>
       </div>
       <p class="hero-note"><span>抖音工作台 · 小红书工作台。</span><br class="note-break" /><span>看得见的，才留得下。</span></p>
@@ -105,7 +104,7 @@ document.querySelector("#app").innerHTML = `
           </section>
         </div>
         <p class="footer-meta reveal-item">
-          <span>Local · Desktop · Two Benches</span>
+          <span>Local · Desktop · Poise</span>
           <span>JVZ © 2026</span>
         </p>
       </div>

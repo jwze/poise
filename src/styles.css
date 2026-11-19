@@ -715,16 +715,6 @@ body[data-theme="light"] .contact-orbit:hover .contact-pencil-light {
     line-height: 1.05;
   }
 
-  .hero .title-line:first-child {
-    white-space: normal;
-  }
-
-  .hero .title-line:first-child .letter-space {
-    display: block;
-    width: 100%;
-    height: 0;
-  }
-
   .manifesto {
     min-height: 105svh;
   }
